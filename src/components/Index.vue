@@ -2,14 +2,14 @@
   <div>
     <div id="openMenu">
       <img
-        src="../public/menu.png"
+        src="/static/menu.png"
         alt=""
       >
     </div>
     <div id="closeMenu">
       <img
         id="poster"
-        src="../public/cross1.png"
+        src="/static/cross1.png"
         alt=""
       >
     </div>
@@ -24,7 +24,7 @@
       </div>
       <div id="posterSection">
         <img
-          src="../public/image.jpg"
+          src="/static/image.jpg"
           alt=""
         >
       </div>
@@ -33,7 +33,7 @@
     <div id="main">
       <div id="logoSection">
         <img
-          src="../public/Kinky-Boots.png"
+          src="/static/Kinky-Boots.png"
           alt=""
         >
       </div>

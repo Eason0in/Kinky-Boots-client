@@ -1,6 +1,7 @@
 <template lang="pug">
   #app
-    h4 asdf
+    form
+      
 </template>
 
 <script>
