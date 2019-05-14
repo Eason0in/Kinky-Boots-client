@@ -40,13 +40,15 @@
       <div id="menuSection">
         <ul>
           <li @mouseover="anim('about')">
-            <div
-              id="about"
-              class="menu"
-            >
-              ABOU
-              <div class="rotate">T</div>
-            </div>
+            <router-link :to="'book'">
+              <div
+                id="about"
+                class="menu"
+              >
+                ABOU
+                <div class="rotate">T</div>
+              </div>
+            </router-link>
           </li>
           <li @mouseover="anim('tour')">
             <div
@@ -123,6 +125,7 @@
     padding: 0;
     background-color: #d32323;
   }
+
   #main {
     height: 100vh;
     width: 100%;
@@ -178,6 +181,12 @@
     cursor: pointer;
   }
 
+  #menuSection ul li a {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
   .menu {
     height: 100px;
     width: 0px;
@@ -189,6 +198,7 @@
     pointer-events: none;
     transition: all 0.4s;
   }
+
   .rotate {
     pointer-events: none;
   }
