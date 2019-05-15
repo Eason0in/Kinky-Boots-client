@@ -7,21 +7,22 @@
           <h2>Kinky Boots</h2>
           <p class="address">Her Majesty's Theatre, London</p>
         </div>
-        <label for="tag">
-          選擇區域
-          <input name="tag" v-model="filter">
-        </label>
-        <br>
-        <label for="ticket">
-          選擇張數
-          <input type="select" name="ticket" v-model="ticket">
-        </label>
-        <div class="ticket" v-if="now_area">
-          <h4>座位{{now_area.tag}}區 ｜ {{now_area.place}} ｜ 價格 £{{now_area.price}}</h4>
-          <br>
-          <h4>Total £{{now_area.price*ticket}}</h4>
-        </div>
         <form class="wrapper">
+          <div class="form-group red" style="display: block">
+            <input
+              class="tag"
+              style="width:30%;"
+              id="tag"
+              type="text"
+              required="required"
+              v-model="filter"
+            >
+            <label for="tag" data-content="選擇區域"></label>
+            <div class="ticket" v-if="now_area">
+              <h3>座位{{now_area.tag}}區 ｜ {{now_area.place}} ｜ 價格 £{{now_area.price}}</h3>
+            </div>
+          </div>
+
           <div class="form-group red">
             <input id="name" type="text" required="required" v-model="book.name">
             <label for="name" data-content="UserName">UserName</label>
@@ -30,7 +31,7 @@
             <input id="telno" type="text" required="required" v-model="book.telno">
             <label for="telno" data-content="TelNo">TelNo</label>
           </div>
-          <div class="form-group red" style="width:30%;">
+          <div class="form-group red">
             <input id="book-date" type="date" required="required" v-model="book.nowDate">
             <label for="book-date" data-content="Date">Date</label>
           </div>
@@ -161,14 +162,8 @@ export default {
       return result[0];
     }
   },
-  mounted() {
-    $("polygon").click(function(e) {
-      var tagname = $(this).attr("data-name");
-      vm.filter = tagname;
-    });
-  },
-  components: {
-    Datepicker
+  methods: {
+    filter() {}
   }
 };
 </script>
@@ -176,7 +171,6 @@ export default {
 
 <style lang="sass" scoped>
 .container
-  margin-top: 8%
   display: grid
   grid-template-columns: 1fr 1fr
   height: 100vh
@@ -186,6 +180,12 @@ export default {
   grid-area: theater_form
   padding: 70px
   line-height: 40px
+  .ticket
+    position: absolute
+    left: 54%
+    top: 75%
+  h2
+    margin-top: -1.5rem
 .svg_area
   grid-area: svg_area
   padding: 70px
@@ -224,15 +224,12 @@ input
   border: solid 2px #d32323
   background-color: transparent
   cursor: pointer
-#app 
-  width: 50%
 
 .tourBtn 
   width: 100%
   height: 40px
   font-size: 18px
   border-radius: 10px
-  margin-top: 20px
   background-color: black
   color: #f1f1f1
   border: solid black
@@ -241,14 +238,12 @@ input
 
 
 .tourBtn:hover 
-  margin-top: 10px
+  margin-top: -15px
   background-color: black
   color: #f1f1f1
-  border: solid black
   box-shadow: 0px 5px 0px 0px rgba(0, 0, 0, 0.4)
 
 .wrapper
-    align-items: center
     display: flex
     flex-direction: column
     justify-content: center
@@ -258,18 +253,16 @@ $sans-serif: Roboto, Arial, sans-serif
 .form-group
     display: inline-block
     height: 3rem
-    padding-top: 2rem
+    padding-top: 0.5rem
+    // border: solid 1px
 
     input
         background: none
-        border: none
-        box-sizing: border-box
         display: block
         font-family: $sans-serif
         font-size: 1rem
         padding: 0.25rem 0.1rem
-        width: 100%
-
+        width: 90%
     input:invalid
         box-shadow: none
 
@@ -284,6 +277,7 @@ $sans-serif: Roboto, Arial, sans-serif
         position: relative
         text-transform: uppercase
         width: 100%
+        left: 5px
 
     label::before
         content: attr(data-content)
@@ -291,23 +285,9 @@ $sans-serif: Roboto, Arial, sans-serif
         transition: all 0.2s ease
         will-change: font-size, top
 
-    label::after
-        bottom: 0.9rem
-        content: ''
-        height: 0.3rem
-        left: 50%
-        position: absolute
-        transition: all 0.2s ease
-        width: 0
-        will-change: width, left
-
     label::before, input[required]:focus ~ label::before
         font-size: 0.75rem
-        top: -3.25rem
-
-    input:focus ~ label::after
-        left: 0%
-        width: 100%
+        top: -3.8rem
 
     input:invalid ~ label::before
         font-size: 1rem
@@ -319,9 +299,6 @@ $sans-serif: Roboto, Arial, sans-serif
         input
             border-bottom: 0.1rem solid $color
             color: $darkcolor
-
-        label::after
-            background: $color
 
         label::before, input[required]:focus ~ label::before
             color: $lightcolor
