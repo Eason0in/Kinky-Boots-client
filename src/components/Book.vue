@@ -7,32 +7,52 @@
           <h2>Kinky Boots</h2>
           <p class="address">Her Majesty's Theatre, London</p>
         </div>
-        <form class="wrapper">
+        <form class="wrapper" @submit.prevent="addBook">
           <div class="form-group red">
             <input
               class="tag"
               style="width:30%;"
               id="tag"
               type="text"
-              required="required"
-              v-model="areas[0]"
+              required
+              v-model="book.areas"
             >
             <label for="tag" data-content="選擇區域"></label>
           </div>
           <div class="form-group red">
-            <input id="book-date" type="date" required="required" v-model="book.nowDate">
+            <datetime
+              v-model="book.nowDate"
+              input-style="{    
+                -webkit-box-align: center;
+                -ms-flex-align: center;
+                align-items: center;
+                width: 20px;
+                height: 15px;
+                padding: 4px 3px;
+                border-radius: 5px;
+                border: solid 2px #d32323;
+                background-color: transparent;
+                cursor: pointer;
+                width:50%;
+                color: #911818;
+                position: relative;
+                top: -4px;}"
+              input-id="book-date"
+              required
+            ></datetime>
+            <!-- <input id="book-date" type="date" required="required" v-model="book.nowDate"> -->
             <label for="book-date" data-content="觀看日期">觀看日期</label>
           </div>
           <div class="form-group red">
-            <input id="name" type="text" required="required" v-model="book.name">
+            <input id="name" type="text" required v-model="book.name">
             <label for="name" data-content="購票姓名">購票姓名</label>
           </div>
           <div class="form-group red">
-            <input id="telno" type="text" required="required" v-model="book.telno">
-            <label for="telno" data-content="手機號碼">手機號碼</label>
+            <input id="email" type="text" required v-model="book.email">
+            <label for="email" data-content="Email">Email</label>
           </div>
           <div class="form-group red">
-            <input id="ticket" type="number" required="required" v-model="book.ticket">
+            <input id="ticket" type="number" required v-model="book.ticket">
             <label for="ticket" data-content="選擇票數">選擇票數</label>
           </div>
           <div class="form-group red" style="width:30%;">
@@ -110,25 +130,34 @@
             ></path>
           </g>
         </svg>
+
+        <div class="ticket">
+          <h4>座位{{book.areas}}區 ｜ {{place}} ｜ 價格 £{{book.price}}</h4>
+          <h4>Total £{{book.price*book.ticket}}</h4>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import moment from "moment";
+import { Datetime } from "vue-datetime";
+import { DateTime as LuxonDateTime } from "luxon";
+
+const API_URL = "http://localhost:1234/books";
 export default {
   name: "Book",
   data: function() {
     return {
       book: {
-        nowDate: "2019-05-15",
+        nowDate: LuxonDateTime.local().toISO(),
         name: "",
         ticket: null,
-        telno: ""
+        email: "",
+        areas: "",
+        price: 0
       },
-      filter: "",
-      ticket: 1,
-      areas: [],
       stage_data: [
         {
           tag: "A1",
@@ -150,20 +179,49 @@ export default {
           place: "Stalls",
           price: 35
         }
-      ]
+      ],
+      place: ""
     };
   },
   methods: {
     add: function(data) {
-      this.areas.unshift(data);
-      console.log(this.areas);
+      this.book.areas = data;
+      const selectStageData = this.stage_data.find(item => {
+        return item.tag === data;
+      });
+      this.place = selectStageData.place;
+      this.book.price = selectStageData.price;
+    },
+    addBook() {
+      console.log(this.book);
+      fetch(API_URL, {
+        method: "POST",
+        body: JSON.stringify(this.book),
+        headers: {
+          "content-type": "application/json"
+        }
+      })
+        .then(res => res.json())
+        .then(result => {
+          if (result.deatils) {
+            const error = result.deatils.map(item => item.message).join(" ");
+            console.log(error);
+          } else {
+            this.book = {};
+            this.place = "";
+          }
+        });
     }
+  },
+  components: {
+    datetime: Datetime
   }
 };
 </script>
 
 
 <style lang="sass" scoped>
+
 .container
   display: grid
   grid-template-columns: 1fr 1fr
@@ -174,15 +232,12 @@ export default {
   grid-area: theater_form
   padding: 70px
   line-height: 40px
-  .ticket
-    position: absolute
-    left: 54%
-    top: 75%
   h2
     margin-top: -1.5rem
 .svg_area
   grid-area: svg_area
   padding: 70px
+  text-align: center
   
 .address
   font-size: 14px
@@ -229,7 +284,6 @@ input
   cursor: pointer
   transition: 0.5s
 
-
 .tourBtn:hover 
   margin-top: -15px
   background-color: black
@@ -240,6 +294,8 @@ input
     display: flex
     flex-direction: column
     justify-content: center
+
+
 
 $sans-serif: Roboto, Arial, sans-serif
 
@@ -284,6 +340,9 @@ $sans-serif: Roboto, Arial, sans-serif
     input:invalid ~ label::before
         font-size: 0.8rem
         top: -2.1rem
+    .vdatetime~label::before
+        font-size: 0.7rem
+        top: -4.2rem
 
 // ---------- CONSTRUCTOR
 @mixin form-group($name, $lightcolor, $color, $darkcolor)
