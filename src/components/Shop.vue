@@ -74,7 +74,7 @@
 export default {
   mounted() {
     $(document).ready(function() {
-      counter = 2;
+      var counter = 2;
 
       $(".next").click(function() {
         if (counter == 1) {
@@ -115,7 +115,7 @@ export default {
           "0 0 0 2px #0D1F2D, 0 0 0 3.5px #CB3843"
         );
         $(".h2").animate({ opacity: 0 }, function() {
-          $(".h2").attr("src", "./public/redBoots.png");
+          $(".h2").attr("src", "/static/redBoots.png");
         });
         $(".h2").animate({ opacity: 1 });
       });
@@ -128,7 +128,7 @@ export default {
           "0 0 0 2px #0D1F2D, 0 0 0 3.5px #CB3843"
         );
         $(".h2").animate({ opacity: 0 }, function() {
-          $(".h2").attr("src", "./public/pinkBoots.png");
+          $(".h2").attr("src", "/static/pinkBoots.png");
         });
         $(".h2").animate({ opacity: 1 });
       });
@@ -140,7 +140,7 @@ export default {
           "0 0 0 2px #0D1F2D, 0 0 0 3.5px #CB3843"
         );
         $(".h2").animate({ opacity: 0 }, function() {
-          $(".h2").attr("src", "./public/brownBoots.png");
+          $(".h2").attr("src", "/static/brownBoots.png");
         });
         $(".h2").animate({ opacity: 1 });
       });
