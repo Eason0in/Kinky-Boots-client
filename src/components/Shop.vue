@@ -1,5 +1,13 @@
 <template>
   <div id="app">
+    <div class="search-box">
+      <input class="search-txt" type="name" placeholder="HOME">
+      <router-link :to="'/'">
+        <div class="search-btn">
+          <img src="/static/webLogo.png" style="height: 35px;color: red">
+        </div>
+      </router-link>
+    </div>
     <div class="main">
       <div class="imgSection">
         <img src="/static/pinkBoots.png" class="boot h1">
@@ -150,11 +158,6 @@ export default {
 </script>
 
 <style>
-body {
-  margin: 0px;
-  padding: 0px;
-  background-color: #d32323;
-}
 .main {
   display: flex;
   position: absolute;
@@ -333,5 +336,58 @@ a {
   width: 300px;
   position: absolute;
   left: 33%;
+}
+
+/* HomePage button */
+.search-box {
+  position: absolute;
+  top: 85%;
+  left: 85%;
+  height: 40px;
+  border-radius: 40px;
+  padding: 10px;
+  background-color: #d32323;
+  cursor: pointer;
+}
+.search-box:hover .search-txt {
+  width: 45px;
+  padding: 0 6px;
+}
+.search-box:hover .search-btn {
+  background-color: #f1f1f1;
+}
+
+.search-btn {
+  color: #d32323;
+  float: right;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #f1f1f1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+::placeholder {
+  color: #f1f1f1;
+}
+
+a {
+  text-decoration: none;
+}
+
+.search-txt {
+  border: none;
+  background: none;
+  outline: none;
+  float: left;
+  padding: 10;
+  color: #f1f1f1;
+  font-size: 16px;
+  transition: 0.4s;
+  line-height: 40px;
+  width: 0;
+  cursor: pointer;
 }
 </style>

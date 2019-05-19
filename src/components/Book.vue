@@ -1,5 +1,13 @@
 <template>
   <div id="app">
+    <div class="search-box">
+      <input class="search-txt" type="name" placeholder="HOME">
+      <router-link :to="'/'">
+        <div class="search-btn">
+          <img src="/static/webLogo.png" style="height: 35px;color: red">
+        </div>
+      </router-link>
+    </div>
     <div class="container">
       <div class="theater_form">
         <div class="theater">
@@ -221,7 +229,10 @@ export default {
 
 
 <style lang="sass" scoped>
-
+body
+  margin: 0
+  padding: 0
+  background: #f1f1f1
 .container
   display: grid
   grid-template-columns: 1fr 1fr
@@ -234,6 +245,15 @@ export default {
   line-height: 40px
   h2
     margin-top: -1.5rem
+  input
+    align-items: center
+    width: 20px
+    height: 15px
+    padding: 5px 3px
+    border-radius: 5px
+    border: solid 2px #d32323
+    background-color: transparent
+    cursor: pointer
 .svg_area
   grid-area: svg_area
   padding: 70px
@@ -264,15 +284,7 @@ polygon
   &:hover
     fill: #d32323
     transform: translate(-5px, -5px)
-input
-  align-items: center
-  width: 20px
-  height: 15px
-  padding: 5px 3px
-  border-radius: 5px
-  border: solid 2px #d32323
-  background-color: transparent
-  cursor: pointer
+
 
 .tourBtn 
   width: 100%
@@ -367,4 +379,54 @@ $darkred: darken($red, 15%)
 
 @include form-group("blue", $lightblue, $blue, $darkblue)
 @include form-group("red", $lightred, $red, $darkred)
+
+
+
+/* HomePage button
+.search-box
+  position: absolute
+  top: 85%
+  left: 85%
+  height: 40px
+  border-radius: 40px
+  padding: 10px
+  background-color: #d32323
+  cursor: pointer
+  &:hover
+    .search-txt
+      width: 45px
+      padding: 0 6px
+    .search-btn
+      background-color: #f1f1f1
+
+.search-btn
+  color: #d32323
+  float: right
+  width: 40px
+  height: 40px
+  border-radius: 50%
+  background-color: #f1f1f1
+  display: flex
+  align-items: center
+  justify-content: center
+  cursor: pointer
+
+::placeholder
+  color: #f1f1f1
+
+a
+  text-decoration: none
+
+.search-txt
+  border: none
+  background: none
+  outline: none
+  float: left
+  padding: 10
+  color: #f1f1f1
+  font-size: 16px
+  transition: 0.4s
+  line-height: 40px
+  width: 0
+  cursor: pointer
 </style>
