@@ -38,16 +38,20 @@
             </div>
           </li>
           <li @mouseover="anim('tour')">
-            <div id="tour" class="menu">
-              TOU
-              <div class="rotate">R</div>
-            </div>
+            <router-link :to="'book'">
+              <div id="tour" class="menu">
+                TOU
+                <div class="rotate">R</div>
+              </div>
+            </router-link>
           </li>
-          <li @mouseover="anim('services')">
-            <div id="services" class="menu">
-              SERVICE
-              <div class="rotate">S</div>
-            </div>
+          <li @mouseover="anim('shop')">
+            <router-link :to="'shop'">
+              <div id="shop" class="menu">
+                SHO
+                <div class="shop">P</div>
+              </div>
+            </router-link>
           </li>
         </ul>
       </div>
@@ -104,6 +108,10 @@ body {
   margin: 0;
   padding: 0;
   background-color: #d32323;
+}
+
+a {
+  color: black;
 }
 
 #main {

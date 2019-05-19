@@ -74,7 +74,7 @@
 export default {
   mounted() {
     $(document).ready(function() {
-      var counter = 2;
+      let counter = 2;
 
       $(".next").click(function() {
         if (counter == 1) {

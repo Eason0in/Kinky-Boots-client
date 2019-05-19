@@ -1,8 +1,9 @@
-import Vue from "vue";
-import Router from "vue-router";
-import Index from "@/components/Index";
-import Book from "@/components/Book";
-import Shop from "@/components/Shop";
+import Vue from 'vue'
+import Router from 'vue-router'
+import Index from '@/components/Index'
+import Book from '@/components/Book'
+import Shop from '@/components/Shop'
+
 Vue.use(Router)
 
 export default new Router({
@@ -18,9 +19,9 @@ export default new Router({
       component: Book
     },
     {
-      path: "/Shop",
-      name: "Shop",
+      path: '/Shop',
+      name: 'Shop',
       component: Shop
-    },
+    }
   ]
 })
