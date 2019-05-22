@@ -32,10 +32,12 @@
       <div id="menuSection">
         <ul>
           <li @mouseover="anim('about')">
-            <div id="about" class="menu">
-              ABOU
-              <div class="rotate">T</div>
-            </div>
+            <router-link :to="'about'">
+              <div id="about" class="menu">
+                ABOU
+                <div class="rotate">T</div>
+              </div>
+            </router-link>
           </li>
           <li @mouseover="anim('tour')">
             <router-link :to="'book'">
