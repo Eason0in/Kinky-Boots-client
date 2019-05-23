@@ -60,7 +60,7 @@
             <label for="name" data-content="購票姓名">購票姓名</label>
           </div>
           <div class="form-group red">
-            <input id="email" type="text" required v-model="book.email">
+            <input id="email" type="email" required v-model="book.email">
             <label for="email" data-content="Email">Email</label>
           </div>
           <div class="form-group red">
