@@ -24,7 +24,7 @@
         <h4>{{Infos.info}}</h4>
       </div>
       <div class="comment">
-        <div class="client" v-for="client in clients">
+        <div class="client" v-for="client in clients" :key="client.name">
           <img :src="client.image" alt>
           <span>★★★★★</span>
           <h3>{{client.name}}</h3>

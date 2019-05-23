@@ -8,6 +8,11 @@
         </div>
       </router-link>
     </div>
+    <div class="search-ticket">
+      <div class="ticket">
+        <p v-for="area in stage_data" :key="area.id">座位{{area.tag}}區 ｜ 剩餘 : {{area.amount}} 個座位</p>
+      </div>
+    </div>
     <div class="container">
       <div class="theater_form">
         <div class="theater">
@@ -29,7 +34,7 @@
           </div>
           <div class="form-group red">
             <datetime
-              v-model="book.nowDate"
+              v-model="book.showDate"
               input-style="{    
                 -webkit-box-align: center;
                 -ms-flex-align: center;
@@ -48,7 +53,6 @@
               input-id="book-date"
               required
             ></datetime>
-            <!-- <input id="book-date" type="date" required="required" v-model="book.nowDate"> -->
             <label for="book-date" data-content="觀看日期">觀看日期</label>
           </div>
           <div class="form-group red">
@@ -140,7 +144,7 @@
         </svg>
 
         <div class="ticket">
-          <h4>座位{{book.areas}}區 ｜ {{place}} ｜ 價格 £{{book.price}}</h4>
+          <h4>座位{{book.areas}}區 ｜ {{place}} ｜ 價格 £{{book.price || 0}}</h4>
           <h4>Total £{{book.price*book.ticket}}</h4>
         </div>
       </div>
@@ -152,44 +156,31 @@
 import moment from "moment";
 import { Datetime } from "vue-datetime";
 import { DateTime as LuxonDateTime } from "luxon";
+const nowDate = LuxonDateTime.local().toISO();
 
-const API_URL = "http://localhost:1234/books";
+const API_URL = "http://localhost:1234/";
 export default {
   name: "Book",
   data: function() {
     return {
       book: {
-        nowDate: LuxonDateTime.local().toISO(),
+        showDate: nowDate,
         name: "",
         ticket: null,
         email: "",
         areas: "",
         price: 0
       },
-      stage_data: [
-        {
-          tag: "A1",
-          place: "Grand Circle",
-          price: 75
-        },
-        {
-          tag: "A2",
-          place: "Grand Circle",
-          price: 55
-        },
-        {
-          tag: "B1",
-          place: "Royal Circle",
-          price: 60
-        },
-        {
-          tag: "B2",
-          place: "Stalls",
-          price: 35
-        }
-      ],
+      stage_data: [],
       place: ""
     };
+  },
+  mounted() {
+    fetch(`${API_URL}`)
+      .then(response => response.json())
+      .then(result => {
+        this.stage_data = result;
+      });
   },
   methods: {
     add: function(data) {
@@ -201,8 +192,7 @@ export default {
       this.book.price = selectStageData.price;
     },
     addBook() {
-      console.log(this.book);
-      fetch(API_URL, {
+      fetch(`${API_URL}books`, {
         method: "POST",
         body: JSON.stringify(this.book),
         headers: {
@@ -216,7 +206,9 @@ export default {
             console.log(error);
           } else {
             this.book = {};
+            this.book.showDate = nowDate;
             this.place = "";
+            this.stage_data = result;
           }
         });
     }
@@ -254,6 +246,7 @@ body
     border: solid 2px #d32323
     background-color: transparent
     cursor: pointer
+
 .svg_area
   grid-area: svg_area
   padding: 70px
@@ -398,6 +391,15 @@ $darkred: darken($red, 15%)
       padding: 0 6px
     .search-btn
       background-color: #f1f1f1
+
+.search-ticket
+  position: absolute
+  top: 6%;
+  right: 2.5%;
+  height: 40px;
+  .ticket
+    p
+      margin: 0.2rem 0.5rem ;
 
 .search-btn
   color: #d32323
