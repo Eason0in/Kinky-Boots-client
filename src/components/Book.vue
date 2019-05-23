@@ -158,7 +158,7 @@ import { Datetime } from "vue-datetime";
 import { DateTime as LuxonDateTime } from "luxon";
 const nowDate = LuxonDateTime.local().toISO();
 
-const API_URL = "http://localhost:1234/";
+const API_URL = "https://kinky-boots.herokuapp.com/";
 export default {
   name: "Book",
   data: function() {
