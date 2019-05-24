@@ -145,7 +145,7 @@
 
         <div class="ticket">
           <h4>座位{{book.areas}}區 ｜ {{place}} ｜ 價格 £{{book.price || 0}}</h4>
-          <h4>Total £{{book.price*book.ticket}}</h4>
+          <h4>Total £{{book.price*book.ticket || 0}}</h4>
         </div>
       </div>
     </div>
