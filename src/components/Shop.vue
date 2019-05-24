@@ -83,6 +83,13 @@ export default {
   mounted() {
     $(document).ready(function() {
       let counter = 2;
+      const clickMap = new Map();
+      clickMap.set("c1", "redBoots");
+      clickMap.set("c2", "pinkBoots");
+      clickMap.set("c3", "brownBoots");
+      clickMap.set("product1", "h1");
+      clickMap.set("product2", "h2");
+      clickMap.set("product3", "h3");
 
       $(".next").click(function() {
         if (counter == 1) {
@@ -115,42 +122,26 @@ export default {
           counter = 2;
         }
       });
-      $(".product2 .c1").click(function() {
-        $(".product2 .c2").css("box-shadow", "none");
-        $(".product2 .c3").css("box-shadow", "none");
-        $(".product2 .c1").css(
-          "box-shadow",
-          "0 0 0 2px #0D1F2D, 0 0 0 3.5px #CB3843"
-        );
-        $(".h2").animate({ opacity: 0 }, function() {
-          $(".h2").attr("src", "/static/redBoots.png");
-        });
-        $(".h2").animate({ opacity: 1 });
-      });
 
-      $(".product2 .c2").click(function() {
-        $(".product2 .c1").css("box-shadow", "none");
-        $(".product2 .c3").css("box-shadow", "none");
-        $(".product2 .c2").css(
-          "box-shadow",
-          "0 0 0 2px #0D1F2D, 0 0 0 3.5px #CB3843"
-        );
-        $(".h2").animate({ opacity: 0 }, function() {
-          $(".h2").attr("src", "/static/pinkBoots.png");
-        });
-        $(".h2").animate({ opacity: 1 });
-      });
-      $(".product2 .c3").click(function() {
-        $(".product2 .c1").css("box-shadow", "none");
-        $(".product2 .c2").css("box-shadow", "none");
-        $(".product2 .c3").css(
-          "box-shadow",
-          "0 0 0 2px #0D1F2D, 0 0 0 3.5px #CB3843"
-        );
-        $(".h2").animate({ opacity: 0 }, function() {
-          $(".h2").attr("src", "/static/brownBoots.png");
-        });
-        $(".h2").animate({ opacity: 1 });
+      $(".infoSection").click(function(e) {
+        const clickTarget = e.target._prevClass;
+        const checkTarget = clickMap.has(clickTarget);
+        if (checkTarget) {
+          $(`.${clickTarget}`)
+            .css("box-shadow", "0 0 0 2px #0D1F2D, 0 0 0 3.5px #CB3843")
+            .siblings()
+            .css("box-shadow", "none");
+
+          const CurrentProduct = e.target.offsetParent.className;
+          const CurrentBoot = clickMap.get(CurrentProduct);
+          const getBootsColor = clickMap.get(clickTarget);
+
+          $(`.${CurrentBoot}`)
+            .animate({ opacity: 0 }, function() {
+              $(`.${CurrentBoot}`).attr("src", `/static/${getBootsColor}.png`);
+            })
+            .animate({ opacity: 1 });
+        }
       });
     });
   }
