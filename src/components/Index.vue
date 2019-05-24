@@ -51,7 +51,7 @@
             <router-link :to="'shop'">
               <div id="shop" class="menu">
                 SHO
-                <div class="shop">P</div>
+                <div class="rotate">P</div>
               </div>
             </router-link>
           </li>
