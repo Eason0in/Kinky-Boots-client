@@ -83,13 +83,16 @@ export default {
   mounted() {
     $(document).ready(function() {
       let counter = 2;
-      const clickMap = new Map();
-      clickMap.set("c1", "redBoots");
-      clickMap.set("c2", "pinkBoots");
-      clickMap.set("c3", "brownBoots");
-      clickMap.set("product1", "h1");
-      clickMap.set("product2", "h2");
-      clickMap.set("product3", "h3");
+      const colorMap = new Map([
+        ["c1", "redBoots"],
+        ["c2", "pinkBoots"],
+        ["c3", "brownBoots"]
+      ]);
+      const productMap = new Map([
+        ["product1", "h1"],
+        ["product2", "h2"],
+        ["product3", "h3"]
+      ]);
 
       $(".next").click(function() {
         if (counter == 1) {
@@ -125,7 +128,7 @@ export default {
 
       $(".infoSection").click(function(e) {
         const clickTarget = e.target._prevClass;
-        const checkTarget = clickMap.has(clickTarget);
+        const checkTarget = colorMap.has(clickTarget);
         if (checkTarget) {
           $(`.${clickTarget}`)
             .css("box-shadow", "0 0 0 2px #0D1F2D, 0 0 0 3.5px #CB3843")
@@ -133,8 +136,8 @@ export default {
             .css("box-shadow", "none");
 
           const CurrentProduct = e.target.offsetParent.className;
-          const CurrentBoot = clickMap.get(CurrentProduct);
-          const getBootsColor = clickMap.get(clickTarget);
+          const CurrentBoot = productMap.get(CurrentProduct);
+          const getBootsColor = colorMap.get(clickTarget);
 
           $(`.${CurrentBoot}`)
             .animate({ opacity: 0 }, function() {
